@@ -1,4 +1,5 @@
 import argparse
+import os
 import random
 import numpy as np
 import pandas as pd
@@ -26,6 +27,9 @@ def main():
     train_csv_path=args.train_csv_path
     test_csv_path=args.test_csv_path
     submission_csv_path=args.submission_csv_path
+    
+    # set environment variables
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     
     # get train and val dataframes
     train_df, val_df, CLASS_TO_INDEX = datatools.preprocess_raw_training_file(train_csv_path)

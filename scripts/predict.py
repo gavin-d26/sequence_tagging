@@ -7,15 +7,6 @@ from .datatools import utterances_to_tensors, clean_utterance_text
 torch.manual_seed(0)
 np.random.seed(0)
 random.seed(0)
-# converts raw model predictions to a series of text names
-def preds_array_to_series(preds, ids_to_names):
-    series = pd.Series(preds)
-    def convert_to_names(plist, ids_to_names):
-        plist = [ids_to_names[i] for i,item in enumerate(plist)]
-        return " ".join(plist)
-        
-    series= series.apply(lambda x: convert_to_names(x, ids_to_names))
-    return series
 
 
 # func to create a .csv file for kaggle submission

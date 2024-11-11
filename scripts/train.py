@@ -156,10 +156,14 @@ def train_func(
                 val_acc": {metrics["val_acc"]:.2f}')
     
     print(f"best model at epoch: {max_epoch}")
+    if wandb_flag is True:
+        wandb.summary.update({"best_epoch":max_epoch, "best_val_acc":max_val_acc})
+        wandb.finish()
     
         
     model.to(device=torch.device('cpu'))
     model.load_state_dict(torch.load("./checkpoints/model.pt", map_location="cpu"))
+    
         
         
         
