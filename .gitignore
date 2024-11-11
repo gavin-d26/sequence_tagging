@@ -6,3 +6,5 @@ submission.csv
 notes.txt
 *__pycache__*
 checkpoints
+.vector_cache
+*submission*.csv

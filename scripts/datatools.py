@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from spacy.cli import download
 from spacy.util import is_package
+import torchtext
 
 torch.manual_seed(0)
 np.random.seed(0)
@@ -53,10 +54,11 @@ def preprocess_raw_training_file(hw_csv_file):
     
 # used to convert raw utterances to tensors for input to model (can be (B, S, embed_dim)!!)
 def utterances_to_tensors(utterance_series):
+    glove = torchtext.vocab.GloVe(name = "6B", dim=100)
     # Tokenize sentences and get embeddings
     def get_embeddings(sentence):
         doc = nlp(sentence)
-        return [token.vector for token in doc]
+        return [np.concatenate((token.vector, glove[token.text].numpy())) for token in doc]
     
     # apply the function to the series
     embeddings = utterance_series.apply(get_embeddings)

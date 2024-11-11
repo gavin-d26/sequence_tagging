@@ -29,8 +29,8 @@ class F1Score():
     
     # append new batches    
     def update(self, preds, targets):
-        preds = preds.argmax(dim=-1).long()
-        targets = targets.long()
+        preds = preds.argmax(dim=-1).long().cpu()
+        targets = targets.long().cpu()
         preds, targets = list(preds), list(targets)
         masks = [target!=self.padding_value for target in targets]
         preds = [[self.INDEX_TO_CLASS[token] for token in pred[mask].tolist()] for pred, mask in zip(preds, masks)]

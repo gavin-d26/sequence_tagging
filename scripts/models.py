@@ -43,11 +43,13 @@ class SequenceTagger(nn.Module):
         self.bidirectional = bidirectional
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=bidirectional, dropout=dropout)
         self.fc = nn.Linear(hidden_size * 2 if bidirectional else hidden_size, output_size)
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
         # h0 = torch.zeros(self.num_layers * 2 if self.bidirectional else self.num_layers, x.size(0), self.hidden_size).to(x.device)
         # c0 = torch.zeros(self.num_layers * 2 if self.bidirectional else self.num_layers, x.size(0), self.hidden_size).to(x.device)
         # out, _ = self.lstm(x, (h0, c0))
         out, _ = self.lstm(x)
+        out = self.dropout(out)
         out = self.fc(out[:, :, :])
         return out
