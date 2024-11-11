@@ -41,7 +41,7 @@ class F1Score():
     
     # used to compute F1 Score at the end of an epoch
     def compute(self):
-        result = f1_score(self.targets, self.preds, mode='strict', scheme=IOB2, )
+        result = f1_score(self.targets, self.preds, mode='strict', scheme=IOB2)
         self.preds=self.targets=None
         return result
 
@@ -157,8 +157,8 @@ def train_func(
     print(f"best model at epoch: {max_epoch}")
     
         
-    # model.to(device=torch.device('cpu'))
-    # model.load_state_dict(torch.load("./checkpoints/model.pt", map_location="cpu"))
+    model.to(device=torch.device('cpu'))
+    model.load_state_dict(torch.load("./checkpoints/model.pt", map_location="cpu"))
         
         
         
