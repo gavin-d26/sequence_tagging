@@ -36,12 +36,12 @@ class RelationClassifierPro(nn.Module):
     
     
 class SequenceTagger(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, num_layers=1, bidirectional=False):
-        super(LSTMModel, self).__init__()
+    def __init__(self, input_size, hidden_size, output_size, num_layers=1, bidirectional=False, dropout=0.3):
+        super(SequenceTagger, self).__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.bidirectional = bidirectional
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=bidirectional)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=bidirectional, dropout=dropout)
         self.fc = nn.Linear(hidden_size * 2 if bidirectional else hidden_size, output_size)
 
     def forward(self, x):

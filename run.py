@@ -35,16 +35,16 @@ def main():
     train_loader, val_loader, test_loader = datatools.create_dataloaders(train_df, val_df, test_df, CLASS_TO_INDEX, configs.hp_configs['batch_size'])
     
     # initialize model
-    model = models.RelationClassifierPro(train_loader.dataset[0][0].shape[1], 
-                                         out_features=len(CLASS_TO_INDEX),
-                                         dropout=configs.hp_configs['dropout'])
+    # model = models.RelationClassifierPro(train_loader.dataset[0][0].shape[1], 
+    #                                      out_features=len(CLASS_TO_INDEX),
+    #                                      dropout=configs.hp_configs['dropout'])
     
-    # model = models.SequenceTagger(input_size=train_loader.dataset[0][0].shape[0], 
-    #                                hidden_size=configs.hidden_size, 
-    #                                output_size=train_loader.dataset[0][1].shape[0],
-    #                                num_layers=configs.num_layers, 
-    #                                bidirectional=configs.bidirectional, 
-    #                                batch_norm=configs.batch_norm)
+    model = models.SequenceTagger(input_size=train_loader.dataset[0][0].shape[1], 
+                                   hidden_size=configs.hp_configs['hidden_size'], 
+                                   output_size=len(CLASS_TO_INDEX),
+                                   num_layers=configs.hp_configs['num_layers'], 
+                                   bidirectional=configs.hp_configs['bidirectional'], 
+                                   dropout=configs.hp_configs['dropout'])
     
     train.train_func(
         model,
@@ -52,7 +52,7 @@ def main():
         val_loader,
         hp_config=configs.hp_configs,
         device=configs.device,
-        wandb_flag=True
+        wandb_flag=False
     )
     
     predict.make_submission_file(model,

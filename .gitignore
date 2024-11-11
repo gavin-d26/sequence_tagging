@@ -5,3 +5,4 @@ wandb
 submission.csv
 notes.txt
 *__pycache__*
+checkpoints
