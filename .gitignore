@@ -1,0 +1,7 @@
+.DS_Store
+*.ipynb
+wandb
+.vscode
+submission.csv
+notes.txt
+*__pycache__*
