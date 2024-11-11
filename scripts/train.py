@@ -42,7 +42,8 @@ class F1Score():
     # used to compute F1 Score at the end of an epoch
     def compute(self):
         result = f1_score(self.targets, self.preds, mode='strict', scheme=IOB2)
-        self.preds=self.targets=None
+        self.preds=[]
+        self.targets=[]
         return result
 
 # function to compute sequence loss
