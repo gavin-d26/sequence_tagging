@@ -56,7 +56,7 @@ def main():
         val_loader,
         hp_config=configs.hp_configs,
         device=configs.device,
-        wandb_flag=True
+        wandb_flag=False
     )
     
     predict.make_submission_file(model,
