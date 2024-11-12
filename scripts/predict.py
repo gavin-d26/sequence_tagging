@@ -33,20 +33,3 @@ def make_submission_file(model, test_csv_path, test_dataloader, INDEX_TO_CLASS,s
     df=df.drop(columns=['utterances'])
     df.to_csv(save_submission_file_path)
     
-    
-# def make_validation_file(model, vectorizer, val_df, ids_to_names, save_validation_file_path="validation.csv", threshold=0., device='cpu'):
-#     device=torch.device(device)
-#     model.to(device)
-    
-#     # convert sentences to tensors
-#     inputs = utterances_to_tensors(val_df['UTTERANCES'], vectorizer)
-    
-#     model.eval()
-#     with torch.inference_mode():
-#         preds = model(inputs.to(device)).cpu()
-    
-#     preds = (preds>threshold).long().numpy()
-#     val_df.to_csv("./data/val_df.csv")
-#     val_df.iloc[:, 1:] = preds
-#     val_df.to_csv(save_validation_file_path)
-    

@@ -46,7 +46,7 @@ class F1Score():
         self.targets=[]
         return result
 
-# function to compute sequence loss
+# function to compute sequence cross-entropy loss
 def sequence_loss_fn(preds, targets, padding_value):
     preds = preds.view(-1, preds.shape[-1])
     targets = targets.view(-1)

@@ -71,6 +71,7 @@ def utterances_to_tensors(utterance_series):
     return padded_embeddings
 
 
+# used to convert IOB Slot tags to tensors for target to model
 def tags_to_tensors(tag_series, CLASS_TO_INDEX):
     def get_tag_indices(tags):
         return [CLASS_TO_INDEX[tag] for tag in tags.split(" ")]
@@ -81,6 +82,7 @@ def tags_to_tensors(tag_series, CLASS_TO_INDEX):
     return padded_tags.float()
 
 
+# used to create dummy targets for the test dataset. used to indicate padding tokens
 def make_dummy_targets(utterance_series):
     def get_dummy_targets(sentence):
         return [0 for token in sentence.split(" ")]
@@ -136,9 +138,9 @@ def create_dataloaders(train_df, val_df, test_df, CLASS_TO_INDEX, batch_size=32)
     test_dataset = RelationExtractionDataset(test_df, CLASS_TO_INDEX, dataset_type='test')
     
     #create dataloaders
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True, worker_init_fn=worker_init_fn)
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True, worker_init_fn=worker_init_fn)
-    test_dataset = torch.utils.data.DataLoader(test_dataset, batch_size=10000, shuffle=False, num_workers=2, pin_memory=True, worker_init_fn=worker_init_fn)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=False, worker_init_fn=worker_init_fn)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=False, worker_init_fn=worker_init_fn)
+    test_dataset = torch.utils.data.DataLoader(test_dataset, batch_size=10000, shuffle=False, num_workers=2, pin_memory=False, worker_init_fn=worker_init_fn)
     return train_loader, val_loader, test_dataset
 
 
